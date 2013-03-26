@@ -70,7 +70,7 @@ public class PostAccessImpl {
 		try {
 			connect();
 			
-			sql = "update post set subj = ?, content = ?, category = ?, writer = ?, mdate = ?, attach = ?, passwd = ?, ipaddr = ? where id = ?";
+			sql = "update post set subj = ?, content = ?, category = ?, writer = ?, mdate = ?, attach = ?, passwd = ?, ipaddr = ?, hit = ? where id = ?";
 			st = con.prepareStatement(sql);
 			
 			st.setString(1, post.getSubj());
@@ -81,7 +81,8 @@ public class PostAccessImpl {
 			st.setString(6, post.getAttach());
 			st.setString(7, post.getPasswd());
 			st.setString(8, post.getIpaddr());
-			st.setInt(9, post.getId());
+			st.setInt(9, post.getHit());
+			st.setInt(10, post.getId());
 			
 			st.executeUpdate();
 			
@@ -163,7 +164,7 @@ public class PostAccessImpl {
 		try {
 			connect();
 			
-			sql = "select id, subj, writer, wdate, mdate from post order by id desc limit " + ((page.getCurrentpage() - 1) * page.getPage()) + ", " + page.getPage();
+			sql = "select id, subj, writer, wdate, mdate, hit from post order by id desc limit " + ((page.getCurrentpage() - 1) * page.getPage()) + ", " + page.getPage();
 			
 			st = con.prepareStatement(sql);
 			rs = st.executeQuery();
@@ -176,6 +177,7 @@ public class PostAccessImpl {
 				temp.setWriter(rs.getString("writer"));
 				temp.setWdate(rs.getString("wdate"));
 				temp.setMdate(rs.getString("mdate"));
+				temp.setHit(rs.getInt("hit"));
 				
 				arr.add(temp);
 

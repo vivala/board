@@ -23,6 +23,7 @@
 	
 	<context:component-scan base-package="com.jinyoung.stress" />
 	
-	
+	<beans:bean id="validator"
+    class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 	
 </beans:beans>

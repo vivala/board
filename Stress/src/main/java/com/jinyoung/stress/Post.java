@@ -1,5 +1,7 @@
 package com.jinyoung.stress;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 
 
@@ -11,7 +13,7 @@ public class Post {
 	
 	Integer b_id;
 	
-	
+	@NotEmpty
 	String subj;
 	
 	
@@ -20,7 +22,7 @@ public class Post {
 	
 	Integer category;
 	
-	
+	@NotEmpty
 	String writer;
 	
 	
@@ -41,7 +43,7 @@ public class Post {
 	
 	String attach;
 	
-	
+	@NotEmpty
 	String passwd;
 	
 	

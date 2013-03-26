@@ -34,16 +34,25 @@
 					<th>작성자</th>
 					<td><form:input
 							path="writer" /></td>
+							<td>
+					<form:errors path = "writer" />
+					</td>
 				</tr>
 				<tr>
 					<th>제목</th>
 					<td><form:input path="subj" />
+					</td>
+					<td>
+					<form:errors path = "subj" />
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
 					<td><form:password 
 							path="passwd" /></td>
+							<td>
+					<form:errors path = "passwd" />
+					</td>
 				</tr>
 				<tr>
 					<th>내용</th>

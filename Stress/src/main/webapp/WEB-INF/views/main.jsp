@@ -16,40 +16,36 @@
 
 	pageContext.setAttribute("arr", (ArrayList<Post>) arr);
 	pageContext.setAttribute("pageObject", (Page) pageObject);
+
+	String ipaddr = request.getRemoteAddr();
+	pageContext.setAttribute("ipaddr", ipaddr);
 %>
 
 <title>자유게시판</title>
-
 </head>
 <body>
 	<center>
 		<h2>자유게시판</h2>
-
 		<table>
-
 			<tr>
 				<th>No.</th>
 				<th>name</th>
 				<th>subject</th>
 				<th>date</th>
 				<th>modify</th>
+				<th>hit</th>
 			</tr>
 			<!-- 글 목록 출력 -->
-
 			<c:forEach items="${arr}" var="post">
-
 				<tr>
 					<td><c:out value="${post.getId()}" escapeXml="false" /></td>
 					<td><c:out value="${post.getWriter()}" escapeXml="false" /></td>
-
-					<td><a href = "/stress/${post.getId()}/${pageObject.getCurrentpage()}"><c:out
-								value="${post.getSubj()}" /></a></td>
+					<td><a href="/stress/${post.getId()}/${pageObject.getCurrentpage()}"><c:out value="${post.getSubj()}" /></a></td>
 					<td><c:out value="${post.getWdate()}" escapeXml="false" /></td>
 					<td><c:out value="${post.getMdate()}" escapeXml="false" /></td>
+					<td><c:out value="${post.getHit()}" escapeXml="false" /></td>
 				</tr>
-
 			</c:forEach>
-
 			<!-- prev, 페이지, next 출력, 조건에 따라 a 태그 발동 -->
 			<tr>
 				<td colspan=5>
@@ -65,8 +61,7 @@
 								<c:out value="${pageObject.getCurrentpage()}" />
 							</c:when>
 							<c:otherwise>
-								<a href="/stress/main/${page}"> <c:out
-										value="${page}" /></a>
+								<a href="/stress/main/${page}"> <c:out value="${page}" /></a>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach> <c:choose>
@@ -79,7 +74,6 @@
 				</td>
 			</tr>
 		</table>
-
 		<p>
 			<a href="/stress/write">write</a>
 	</center>
