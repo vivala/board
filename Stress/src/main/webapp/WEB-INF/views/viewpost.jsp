@@ -20,7 +20,7 @@
 
 <script>
 
-var id = 
+
 	$(function() {
 		$("#check-passwd").dialog({
 			autoOpen : false,
@@ -48,8 +48,7 @@ var id =
 					        function(result){
 				        if(result == "true"){
 				        alert("삭제되었습니다.");
-				        $(location).attr('href', "/stress/del/<%=postObject.getId()%>
-	");
+				        $(location).attr('href', "/stress/del/<%=postObject.getId()%>");
 														} else {
 															alert("비밀번호가 틀렸습니다.");
 															$(this).dialog(
@@ -64,6 +63,9 @@ var id =
 						});
 		$("#check").button().click(function() {
 			$("#check-passwd").dialog("open");
+		});
+		$("#reply").button().click(function() {
+			$(location).attr('href', "/stress/reply/<%=postObject.getId()%>");
 		});
 	});
 </script>
@@ -107,7 +109,8 @@ var id =
 			</div>
 
 			<input type="button" id="check" value="수정/삭제" />
-
+			<input type="button" id ="reply" value = "답변달기" />
+			
 		</form>
 
 		<p>

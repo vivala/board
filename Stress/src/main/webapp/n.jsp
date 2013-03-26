@@ -7,9 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form method = "post" action = "NewFile.jsp">
-<input type = "text" name = "a" />
-<input type = "submit" />
+
 </form>
 </body>
 </html>

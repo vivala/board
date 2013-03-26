@@ -22,58 +22,38 @@
 %>
 
 <title>자유게시판</title>
+<script>
+function list(page) {
+	$.post("/list/"+page, {page:page}, function(html) {
+		$("#list").html(html);
+	});
+}
+
+$(document).ready(function() {
+	$("#gnb a").removeAttr("href");
+	$("#list_a").click(function() {
+		$.get("/list/1", function(html) {
+			$("#list").html(html);
+		});
+	}).css("cursor", "pointer");
+
+	$("#write_a").click(function() {
+		$.get("/write", function(html) {
+			$("#list").html(html);
+		});
+	}).css("cursor", "pointer");
+});
+</script>
 </head>
 <body>
+<div id="gnb">
+<a href="" id="list_a">목록</a> | <a href="" id="write_a">글쓰기</a>
+</div>
 	<center>
 		<h2>자유게시판</h2>
-		<table>
-			<tr>
-				<th>No.</th>
-				<th>name</th>
-				<th>subject</th>
-				<th>date</th>
-				<th>modify</th>
-				<th>hit</th>
-			</tr>
-			<!-- 글 목록 출력 -->
-			<c:forEach items="${arr}" var="post">
-				<tr>
-					<td><c:out value="${post.getId()}" escapeXml="false" /></td>
-					<td><c:out value="${post.getWriter()}" escapeXml="false" /></td>
-					<td><a href="/stress/${post.getId()}/${pageObject.getCurrentpage()}"><c:out value="${post.getSubj()}" /></a></td>
-					<td><c:out value="${post.getWdate()}" escapeXml="false" /></td>
-					<td><c:out value="${post.getMdate()}" escapeXml="false" /></td>
-					<td><c:out value="${post.getHit()}" escapeXml="false" /></td>
-				</tr>
-			</c:forEach>
-			<!-- prev, 페이지, next 출력, 조건에 따라 a 태그 발동 -->
-			<tr>
-				<td colspan=5>
-					<!-- prev, next, 1, 2, 3, 4, 5 --> <c:choose>
-						<c:when test="${pageObject.getStartpage() <= 1}"> prev </c:when>
-						<c:otherwise>
-							<a href="/stress/main/${pageObject.getStartpage() - 1}"> prev</a>
-						</c:otherwise>
-					</c:choose> <c:forEach begin="${pageObject.getStartpage()}"
-						end="${pageObject.getEndpage()}" step="1" var="page">
-						<c:choose>
-							<c:when test="${pageObject.getCurrentpage() == page}">
-								<c:out value="${pageObject.getCurrentpage()}" />
-							</c:when>
-							<c:otherwise>
-								<a href="/stress/main/${page}"> <c:out value="${page}" /></a>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach> <c:choose>
-						<c:when
-							test="${pageObject.getEndpage() >= pageObject.getTotalpage()}"> next </c:when>
-						<c:otherwise>
-							<a href="/stress/main/${pageObject.getEndpage() + 1}"> next</a>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-		</table>
+		<div id="list">
+		<jsp:include page="list.jsp"></jsp:include>
+		</div>
 		<p>
 			<a href="/stress/write">write</a>
 	</center>

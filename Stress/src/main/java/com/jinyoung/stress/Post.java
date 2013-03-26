@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 
-public class Post {
+public class Post  {
 
 	private Integer id;
 	
@@ -35,19 +35,23 @@ public class Post {
 	Integer hit;
 	
 	
-	Integer parent;
+	Integer grp;
 	
 	
-	Integer depth;
+	Integer seq;
 	
 	
-	String attach;
+	Integer lev;
 	
 	@NotEmpty
 	String passwd;
 	
 	
 	String ipaddr;
+	
+	Integer parent;
+	
+	
 
 	public Post() {
 
@@ -60,17 +64,18 @@ public class Post {
 		wdate = "";
 		mdate = "";
 		hit = 0;
-		parent = 0;
-		depth = 0;
-		attach = "";
+		grp = 0;
+		seq = 0;
+		lev = 0;
 		passwd = "";
 		ipaddr = "";
+		parent = 0;
 
 	}
 
 	public void setAll(int b_id, String subj, String content, int category,
-			String writer, String wdate, String mdate, int hit, int parent,
-			int depth, String attach, String passwd, String ipaddr) {
+			String writer, String wdate, String mdate, int hit, int grp,
+			int seq, int lev, String passwd, String ipaddr, int parent) {
 		
 		this.b_id = b_id;
 		this.subj = subj;
@@ -80,11 +85,12 @@ public class Post {
 		this.wdate = wdate;
 		this.mdate = mdate;
 		this.hit = hit;
-		this.parent = parent;
-		this.depth = depth;
-		this.attach = attach;
+		this.grp = grp;
+		this.seq = seq;
+		this.lev = lev;
 		this.passwd = passwd;
 		this.ipaddr = ipaddr;
+		this.parent = parent;
 	
 	}
 	
@@ -98,13 +104,16 @@ public class Post {
 		this.wdate = post.wdate;
 		this.mdate = post.mdate;
 		this.hit = post.hit;
-		this.parent = post.parent;
-		this.depth = post.depth;
-		this.attach = post.attach;
+		this.grp = post.grp;
+		this.seq = post.seq;
+		this.lev = post.lev;
 		this.passwd = post.passwd;
 		this.ipaddr = post.ipaddr;
+		this.parent = post.parent;
 	}
 
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -177,29 +186,7 @@ public class Post {
 		this.hit = hit;
 	}
 
-	public int getParent() {
-		return parent;
-	}
-
-	public void setParent(int parent) {
-		this.parent = parent;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
-
-	public String getAttach() {
-		return attach;
-	}
-
-	public void setAttach(String attach) {
-		this.attach = attach;
-	}
+	
 
 	public String getPasswd() {
 		return passwd;
@@ -216,5 +203,58 @@ public class Post {
 	public void setIpaddr(String ipaddr) {
 		this.ipaddr = ipaddr;
 	}
+
+	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setB_id(Integer b_id) {
+		this.b_id = b_id;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
+	public void setHit(Integer hit) {
+		this.hit = hit;
+	}
+
+	public Integer getGrp() {
+		return grp;
+	}
+
+	public void setGrp(Integer grp) {
+		this.grp = grp;
+	}
+
+	public Integer getSeq() {
+		return seq;
+	}
+
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
+
+	public Integer getLev() {
+		return lev;
+	}
+
+	public void setLev(Integer lev) {
+		this.lev = lev;
+	}
+
+	public int getParent() {
+		return parent;
+	}
+
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+	
+	
 
 }
