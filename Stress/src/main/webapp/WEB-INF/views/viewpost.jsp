@@ -13,13 +13,25 @@
 	pageContext.setAttribute("pageObject", (Page) pageObject);
 %>
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css" />
-
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
 
 <script>
+$(document).ready(function() {
 
+	$("#cancel").click(function() {
+		$.ajax({
+			type : "GET",
+			url : "/stress/list.do",
+			async : false,
+			success : function(result) {
+				$("#content").html(result);
+			}
+		});
+	});
+});
 
 	$(function() {
 		$("#check-passwd").dialog({
@@ -114,7 +126,7 @@
 		</form>
 
 		<p>
-			<a href="/stress/main/${pageObject.getCurrentpage()}">돌아가기</a>
+			<a id = "cancel" href="#">돌아가기</a>
 		<p>
 	</center>
 </body>

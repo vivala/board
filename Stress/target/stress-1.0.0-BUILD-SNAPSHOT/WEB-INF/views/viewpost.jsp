@@ -6,19 +6,80 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <%
-
 	Page pageObject = (Page) request.getAttribute("pageObject");
 	Post postObject = (Post) request.getAttribute("postObject");
 
 	pageContext.setAttribute("postObject", (Post) postObject);
 	pageContext.setAttribute("pageObject", (Page) pageObject);
 %>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script>
-$(document).ready(function (){
-	
-})
 
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+
+<script>
+$(document).ready(function() {
+
+	$("#cancel").click(function() {
+		$.ajax({
+			type : "GET",
+			url : "/stress/list.do",
+			async : false,
+			success : function(result) {
+				$("#content").html(result);
+			}
+		});
+	});
+});
+
+	$(function() {
+		$("#check-passwd").dialog({
+			autoOpen : false,
+			closeOnEscape : false,
+			open : function(event, ui) {
+				$(".ui-dialog-titlebar-close", $(this).parent()).hide();
+			},
+			buttons : {
+				"수정" : function() {
+					var passwd = $('#passwd').val();
+			        $.post("/stress/check/<%=postObject.getId()%>", {"passwd":passwd}, 
+					        function(result){ 
+				        if (result == "true") { 
+					      $(location).attr('href', "/stress/modify/<%=postObject.getId()%>");
+					        }
+				        else {
+					        alert("비밀번호가 틀렸습니다.");
+					        $(this).dialog("close");
+					        }
+				        });
+				},
+				"삭제" : function() {
+					var passwd = $('#passwd').val();
+			        $.post("/stress/check/<%=postObject.getId()%>", {"passwd":passwd}, 
+					        function(result){
+				        if(result == "true"){
+				        alert("삭제되었습니다.");
+				        $(location).attr('href', "/stress/del/<%=postObject.getId()%>");
+														} else {
+															alert("비밀번호가 틀렸습니다.");
+															$(this).dialog(
+																	"close");
+														}
+													});
+								},
+								"취소" : function() {
+									$(this).dialog("close");
+								}
+							},
+						});
+		$("#check").button().click(function() {
+			$("#check-passwd").dialog("open");
+		});
+		$("#reply").button().click(function() {
+			$(location).attr('href', "/stress/reply/<%=postObject.getId()%>");
+		});
+	});
 </script>
 
 <title>자유게시판</title>
@@ -30,24 +91,43 @@ $(document).ready(function (){
 		<hr>
 		<table>
 			<tr>
-			<td colspan = 2> <c:out value = "${postObject.getSubj()}" escapeXml = "false" /> </td>
+				<td><c:out value="${postObject.getSubj()}" escapeXml="false" />
+				</td>
+				<td><c:out value="${postObject.getHit() }" escapeXml="false" /></td>
 			</tr>
 			<tr>
-			<td> <c:out value = "${postObject.getWriter()}" escapeXml = "false" /> </td>
-			<td> <c:out value = "${postObject.getMdate()}" escapeXml = "false" /> </td>
+				<td><c:out value="${postObject.getWriter()}" escapeXml="false" />
+				</td>
+				<td><c:out value="${postObject.getMdate()}" escapeXml="false" />
+				</td>
 			</tr>
 			<tr>
-			<td colspan = 2> <c:out value = "${postObject.getContent()}" escapeXml = "false" /> </td>
+				<td colspan=2><c:out value="${postObject.getContent()}"
+						escapeXml="false" /></td>
 			</tr>
 		</table>
-		<p>
-		<a href = "/stress/modify/${postObject.getId() }">수정하기</a>
-		<a   href = "/stress/delete/${postObject.getId() }" onClick = "alert('삭제되었습니다.');">삭제하기</a>
-		<p>
-			<a href="/stress/main/${pageObject.getCurrentpage()}">돌아가기</a>
-		<p>
+
+		<form id="pass">
+			<div id="check-passwd">
+				<p>비밀번호를 입력해 주세요.</p>
+
+
+				<fieldset>
+					<label for="passwd">password</label> <input type="text"
+						name="passwd" id="passwd"
+						class="text ui-widget-content ui-corner-all" />
+				</fieldset>
+
+			</div>
+
+			<input type="button" id="check" value="수정/삭제" />
+			<input type="button" id ="reply" value = "답변달기" />
 			
-		
+		</form>
+
+		<p>
+			<a id = "cancel" href="#">돌아가기</a>
+		<p>
 	</center>
 </body>
 </html>

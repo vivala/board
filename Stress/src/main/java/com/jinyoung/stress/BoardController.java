@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -23,10 +24,10 @@ public class BoardController {
 	BoardServiceImpl boardService = new BoardServiceImpl();
 
 	// 글 리스트
-	@RequestMapping(value = "/main/{currentpage}", method = RequestMethod.GET)
-	public ModelAndView main(@PathVariable("currentpage") int currentpage,
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public ModelAndView main(@RequestParam(value = "currentpage", required = false, defaultValue = "1") int currentpage,
 			ModelMap model) {
-
+		
 		int totalpage = boardService.getnum();
 		Page page = new Page(totalpage, currentpage);
 
@@ -37,10 +38,10 @@ public class BoardController {
 	}
 
 	// 글 리스트
-	@RequestMapping(value = "/list/{currentpage}", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable("currentpage") int currentpage,
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam(value = "currentpage", required = false, defaultValue = "1") int currentpage,
 			ModelMap model) {
-
+		
 		int totalpage = boardService.getnum();
 		Page page = new Page(totalpage, currentpage);
 
@@ -53,22 +54,24 @@ public class BoardController {
 	// 글쓰기
 	@RequestMapping("/write")
 	public void write(Model model) {
-		System.out.println("write");
 		model.addAttribute("post", new Post());
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/formsubmit")
 	public ModelAndView formSubmit(ModelMap model, @Valid Post post,
 			BindingResult result) {
-		if (result.hasErrors())
+	
+		if (result.hasErrors()) {
+		
 			return new ModelAndView("/write");
+		}
 		boardService.add(post);
-
-		RedirectView redirectView = new RedirectView("/main/1");
+		
+		RedirectView redirectView = new RedirectView("/list");
 		redirectView.setContextRelative(true);
 
 		ModelAndView mav = new ModelAndView(redirectView);
-
+		
 		return mav;
 
 	}
@@ -77,7 +80,6 @@ public class BoardController {
 	@RequestMapping("/reply/{pid}")
 	public ModelAndView reply(@PathVariable int pid, Model model) {
 
-		System.out.println("reply");
 		Post post = new Post();
 		post.setParent(pid);
 		post.setGrp(boardService.get(pid).getGrp());
@@ -109,10 +111,11 @@ public class BoardController {
 	public String viewpost(@PathVariable int id, @PathVariable int currentpage,
 			Model model) {
 
+		System.out.println("view!");
+		
 		Page page = new Page(boardService.getnum(), currentpage);
 		Post post = boardService.get(id);
 
-		System.out.println("gethit : " + post.getHit());
 		post.setHit(post.getHit() + 1);
 
 		boardService.update(post);

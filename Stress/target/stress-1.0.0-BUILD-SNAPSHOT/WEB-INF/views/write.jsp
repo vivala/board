@@ -11,16 +11,42 @@
 	pageContext.setAttribute("ipaddr", ipaddr);
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
 
+		$("#cancel").click(function() {
+			$.ajax({
+				type : "GET",
+				url : "/stress/list.do",
+				async : false,
+				success : function(result) {
+					$("#content").html(result);
+				}
+			});
+		});
+	});
+	function submitfunc() {
+		var str = $("#writeform").serialize();
+		$.ajax({
+			type : "post",
+			data : "post="+str,
+			url : "/stress/formsubmit.do",
+			async : false,
+			success : function(result) {
+				$("#content").html(result);
+			}
+		});
+	}
+</script>
 <title>글쓰기</title>
 </head>
 <body>
 	<!-- 글 작성 -->
 	<center>
 		<h2>글쓰기 페이지입니다.</h2>
-		<form:form method = "post" commandName = "post" action = "/stress/formsubmit">
-			<form:hidden value="${ipaddr}"
-				path="ipaddr" />
+		<form:form id="writeform" method="post" commandName="post" action="">
+			<form:hidden value="${ipaddr}" path="ipaddr" />
 			<table>
 				<tr>
 					<th><form:select path="b_id">
@@ -32,28 +58,26 @@
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td><form:input
-							path="writer" /></td>
+					<td><form:input path="writer" /></td>
+					<td><form:errors path="writer" /></td>
 				</tr>
 				<tr>
 					<th>제목</th>
-					<td><form:input path="subj" />
-					</td>
+					<td><form:input path="subj" /></td>
+					<td><form:errors path="subj" /></td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
-					<td><form:password 
-							path="passwd" /></td>
+					<td><form:password path="passwd" /></td>
+					<td><form:errors path="passwd" /></td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><form:textarea path="content" ></form:textarea>
-					</td>
+					<td><form:textarea path="content"></form:textarea></td>
 				</tr>
 				<tr>
-					<td><form:input type="submit" value="확인" path="" /></td>
-					<td><form:input type="button" value="취소"
-							onclick="history.back()" path="" /></td>
+					<td><form:input type="button" value="확인" path="" onClick = "submitfunc()"/></td>
+					<td><form:input id="cancel" type="button" value="취소" path="" /></td>
 				</tr>
 
 

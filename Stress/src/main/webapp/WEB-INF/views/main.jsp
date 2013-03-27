@@ -22,40 +22,43 @@
 %>
 
 <title>자유게시판</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-function list(page) {
-	$.post("/list/"+page, {page:page}, function(html) {
-		$("#list").html(html);
+	$(document).ready(function() {
+		$("a").removeAttr("href").css("cursor", "pointer");
+		$("#calllist").click(function() {
+			$.ajax({
+				type : "GET",
+				url : "/stress/list.do",
+				async : false,
+				success : function(result) {
+					$("#content").html(result);
+				}
+			});
+		});
+		$("#callwrite").click(function() {
+			$.ajax({
+				type : "GET",
+				url : "/stress/write.do",
+				async : false,
+				success : function(result) {
+					$("#content").html(result);
+				}
+			});
+		});
 	});
-}
-
-$(document).ready(function() {
-	$("#gnb a").removeAttr("href");
-	$("#list_a").click(function() {
-		$.get("/list/1", function(html) {
-			$("#list").html(html);
-		});
-	}).css("cursor", "pointer");
-
-	$("#write_a").click(function() {
-		$.get("/write", function(html) {
-			$("#list").html(html);
-		});
-	}).css("cursor", "pointer");
-});
 </script>
 </head>
 <body>
-<div id="gnb">
-<a href="" id="list_a">목록</a> | <a href="" id="write_a">글쓰기</a>
-</div>
+	<div id="gnb">
+		<a id="calllist" href="#">목록</a> <a id="callwrite" href="#">글쓰기</a>
+	</div>
 	<center>
 		<h2>자유게시판</h2>
-		<div id="list">
-		<jsp:include page="list.jsp"></jsp:include>
+		<div id="content">
+			<jsp:include page="list.jsp"></jsp:include>
 		</div>
 		<p>
-			<a href="/stress/write">write</a>
 	</center>
 </body>
 </html>
