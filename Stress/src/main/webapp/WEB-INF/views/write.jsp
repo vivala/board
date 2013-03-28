@@ -11,7 +11,11 @@
 	pageContext.setAttribute("ipaddr", ipaddr);
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css" />
 <script>
 	$(document).ready(function() {
 
@@ -21,7 +25,7 @@
 				url : "/stress/list.do",
 				async : false,
 				success : function(result) {
-					$("#content").html(result);
+					$("#contents").html(result);
 				}
 			});
 		});
@@ -34,7 +38,7 @@
 			url : "/stress/formsubmit.do",
 			async : false,
 			success : function(result) {
-				$("#content").html(result);
+				$("#contents").html(result);
 			}
 		});
 	}

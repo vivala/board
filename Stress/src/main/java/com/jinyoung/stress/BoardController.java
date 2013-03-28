@@ -97,7 +97,7 @@ public class BoardController {
 
 		boardService.addChild(post);
 
-		RedirectView redirectView = new RedirectView("/main/1");
+		RedirectView redirectView = new RedirectView("/list");
 		redirectView.setContextRelative(true);
 
 		ModelAndView mav = new ModelAndView(redirectView);
@@ -111,7 +111,6 @@ public class BoardController {
 	public String viewpost(@PathVariable int id, @PathVariable int currentpage,
 			Model model) {
 
-		System.out.println("view!");
 		
 		Page page = new Page(boardService.getnum(), currentpage);
 		Post post = boardService.get(id);
@@ -132,10 +131,9 @@ public class BoardController {
 			@PathVariable int id) {
 
 		String oripasswd = boardService.get(id).getPasswd();
-		if (oripasswd.equals(passwd))
-			return "true";
-		else
-			return "false";
+		
+		if (oripasswd.equals(passwd)) return "true";
+		else return "false";
 
 	}
 
@@ -150,20 +148,18 @@ public class BoardController {
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public ModelAndView modifyFormSubmit(ModelMap model, @Valid Post post,
 			BindingResult result, SessionStatus status) {
-
 		if (result.hasErrors()) {
 			return new ModelAndView("/modify");
+			
 		}
 		/* post.setHit(0); */
 		boardService.update(post);
-
 		status.setComplete();
 
-		RedirectView redirectView = new RedirectView("/main/1");
+		RedirectView redirectView = new RedirectView("/list");
 		redirectView.setContextRelative(true);
 
 		ModelAndView mav = new ModelAndView(redirectView);
-
 		return mav;
 
 	}
@@ -174,7 +170,7 @@ public class BoardController {
 
 		boardService.delete(boardService.get(id));
 
-		RedirectView redirectView = new RedirectView("/main/1");
+		RedirectView redirectView = new RedirectView("/list");
 		redirectView.setContextRelative(true);
 
 		ModelAndView mav = new ModelAndView(redirectView);

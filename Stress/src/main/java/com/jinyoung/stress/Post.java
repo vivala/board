@@ -8,10 +8,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Post  {
 
-	private Integer id;
+	private int id;
 	
 	
-	Integer b_id;
+	int b_id;
 	
 	@NotEmpty
 	String subj;
@@ -20,7 +20,7 @@ public class Post  {
 	String content;
 	
 	
-	Integer category;
+	int category;
 	
 	@NotEmpty
 	String writer;
@@ -32,16 +32,16 @@ public class Post  {
 	String mdate;
 	
 	
-	Integer hit;
+	int hit;
 	
 	
-	Integer grp;
+	int grp;
 	
 	
-	Integer seq;
+	int seq;
 	
 	
-	Integer lev;
+	int lev;
 	
 	@NotEmpty
 	String passwd;
@@ -49,7 +49,7 @@ public class Post  {
 	
 	String ipaddr;
 	
-	Integer parent;
+	int parent;
 	
 	
 
@@ -112,8 +112,6 @@ public class Post  {
 		this.parent = post.parent;
 	}
 
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -186,7 +184,29 @@ public class Post  {
 		this.hit = hit;
 	}
 
-	
+	public int getGrp() {
+		return grp;
+	}
+
+	public void setGrp(int grp) {
+		this.grp = grp;
+	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
+	public int getLev() {
+		return lev;
+	}
+
+	public void setLev(int lev) {
+		this.lev = lev;
+	}
 
 	public String getPasswd() {
 		return passwd;
@@ -204,48 +224,6 @@ public class Post  {
 		this.ipaddr = ipaddr;
 	}
 
-	
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setB_id(Integer b_id) {
-		this.b_id = b_id;
-	}
-
-	public void setCategory(Integer category) {
-		this.category = category;
-	}
-
-	public void setHit(Integer hit) {
-		this.hit = hit;
-	}
-
-	public Integer getGrp() {
-		return grp;
-	}
-
-	public void setGrp(Integer grp) {
-		this.grp = grp;
-	}
-
-	public Integer getSeq() {
-		return seq;
-	}
-
-	public void setSeq(Integer seq) {
-		this.seq = seq;
-	}
-
-	public Integer getLev() {
-		return lev;
-	}
-
-	public void setLev(Integer lev) {
-		this.lev = lev;
-	}
-
 	public int getParent() {
 		return parent;
 	}
@@ -254,6 +232,8 @@ public class Post  {
 		this.parent = parent;
 	}
 
+	
+	
 	
 	
 

@@ -1,6 +1,7 @@
 package com.jinyoung.stress;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Test {
 	
@@ -76,6 +77,18 @@ public class Test {
 		System.out.print(arr.get(i).getGrp() + ", ");
 		System.out.println(arr.get(i).getSeq());
 	}
+	
+	PostAccessImpl pa = new PostAccessImpl();
+	Page page = new Page(pa.getNum(), 3);
+	
+	ArrayList<Post> arr2 = pa.list(page);
+	
+	for(int i = 0; i< arr2.size(); i++) System.out.println("grp : "+ arr2.get(i).getGrp() + "parent : " + arr2.get(i).getParent() + "seq : " + arr2.get(i).getSeq() + "lev : " + arr2.get(i).getLev());
+	
+	Collections.sort(arr2, new Compare());
+	System.out.println();
+
+	for(int i = 0; i< arr2.size(); i++) System.out.println("grp : "+ arr2.get(i).getGrp() + "parent : " + arr2.get(i).getParent() + "seq : " + arr2.get(i).getSeq() + "lev : " + arr2.get(i).getLev());
 	
 	}
 	

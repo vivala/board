@@ -23,6 +23,10 @@
 
 <title>자유게시판</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css" />
 <script>
 	$(document).ready(function() {
 		$("a").removeAttr("href").css("cursor", "pointer");
@@ -32,7 +36,7 @@
 				url : "/stress/list.do",
 				async : false,
 				success : function(result) {
-					$("#content").html(result);
+					$("#contents").html(result);
 				}
 			});
 		});
@@ -42,7 +46,7 @@
 				url : "/stress/write.do",
 				async : false,
 				success : function(result) {
-					$("#content").html(result);
+					$("#contents").html(result);
 				}
 			});
 		});
@@ -55,7 +59,7 @@
 	</div>
 	<center>
 		<h2>자유게시판</h2>
-		<div id="content">
+		<div id="contents">
 			<jsp:include page="list.jsp"></jsp:include>
 		</div>
 		<p>

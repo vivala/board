@@ -61,13 +61,14 @@ public class PostAccessImpl {
 			st.setInt(12, post.getParent());
 
 			st.executeUpdate();
-
-			sql = "select @@identity";
-			st = con.prepareStatement(sql);
-			rs = st.executeQuery();
-			rs.next();
-
+			
+			
 			if (post.getGrp() == -1) {
+				
+				sql = "select @@identity";
+				st = con.prepareStatement(sql);
+				rs = st.executeQuery();
+				rs.next();
 				post.setId(rs.getInt("@@identity"));
 				post.setGrp(rs.getInt("@@identity"));
 
@@ -233,7 +234,6 @@ public class PostAccessImpl {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-
 		return arr;
 	}
 
@@ -245,7 +245,7 @@ public class PostAccessImpl {
 
 			connect();
 
-			sql = "select id, seq from post where grp = ?";
+			sql = "select id, seq, parent, lev from post where grp = ?";
 
 			st = con.prepareStatement(sql);
 			st.setInt(1, grp);
@@ -257,6 +257,8 @@ public class PostAccessImpl {
 
 				temp.setId(rs.getInt("id"));
 				temp.setSeq(rs.getInt("seq"));
+				temp.setParent(rs.getInt("parent"));
+				temp.setLev(rs.getInt("lev"));
 
 				arr.add(temp);
 			}
